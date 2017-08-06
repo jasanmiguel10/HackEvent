@@ -16,6 +16,8 @@ import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Prototipo extends JFrame {
 
@@ -43,9 +45,14 @@ public class Prototipo extends JFrame {
 	 * Create the frame.
 	 */
 	public Prototipo() {
+		setResizable(false);
+		ImageIcon imgMap = new ImageIcon("./images/100%.jpg");
+		ImageIcon imgMap75 = new ImageIcon("./images/50%.jpg");
+		ImageIcon imgMapForward = new ImageIcon("./images/100%2.jpg");
+		ImageIcon imgChart = new ImageIcon("images/pie chart.jpg");
 		setTitle("CiberBulling Analysis");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 948, 595);
+		setBounds(100, 100, 775, 595);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -68,24 +75,51 @@ public class Prototipo extends JFrame {
 		
 		JComboBox cbtime = new JComboBox();
 		cbtime.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		cbtime.setModel(new DefaultComboBoxModel(new String[] {"Hour", "Day", "Week", "Month", "Year", "Decade", "Milenium", "Jesus Time"}));
+		cbtime.setModel(new DefaultComboBoxModel(new String[] {"*Month"}));
 		cbtime.setToolTipText("\r\n");
 		auxPan.add(cbtime);
-		
+		JLabel label_1 = new JLabel("");
+		JButton btnNewButton_1 = new JButton("Forward->");
+		JButton btnNewButton = new JButton("<- Back");
 		JComboBox cbZoom = new JComboBox();
+		cbZoom.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if((cbZoom.getSelectedItem() +"").equals("25%")) {
+					btnNewButton.setEnabled(false);
+					btnNewButton_1.setEnabled(true);
+					label_1.setIcon(imgMap75);
+				}
+			}
+		});
 		cbZoom.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		cbZoom.setModel(new DefaultComboBoxModel(new String[] {"100%", "75%", "50%", "25%"}));
+		cbZoom.setModel(new DefaultComboBoxModel(new String[] {"100%", "25%"}));
 		auxPan.add(cbZoom);
 		
 		JPanel panelTime = new JPanel();
 		auxPan.add(panelTime);
 		panelTime.setLayout(new GridLayout(0, 2, 0, 0));
-		
-		JButton btnNewButton = new JButton("<- Back");
+
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnNewButton.setEnabled(false);
+				btnNewButton_1.setEnabled(true);
+				label_1.setIcon(imgMap);
+			}
+		});
+		btnNewButton.setEnabled(false);
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
 		panelTime.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("Forward->");
+		
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				btnNewButton.setEnabled(true);
+				btnNewButton_1.setEnabled(false);
+				label_1.setIcon(imgMapForward);
+				cbZoom.setSelectedIndex(0);
+			}
+		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panelTime.add(btnNewButton_1);
 		
@@ -99,25 +133,25 @@ public class Prototipo extends JFrame {
 		mapPanel.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JLabel label_1 = new JLabel("");
+		
 		label_1.setBackground(UIManager.getColor("CheckBox.highlight"));
 		panel.add(label_1);
-		label_1.setIcon(new ImageIcon("C:\\Users\\Usuario\\Documents\\HackEvent\\20645941_10214509706636640_1109325649_n.png"));
-		ImageIcon img = new ImageIcon("C:\\Users\\Usuario\\Documents\\HackEvent\\ccc.jpg");
+		label_1.setIcon(imgMap);
+		
 		
 		JPanel chartsPanel = new JPanel();
 		contentPane.add(chartsPanel, BorderLayout.CENTER);
 		chartsPanel.setLayout(new GridLayout(2, 1, 0, 0));
 		
 		JLabel label_2 = new JLabel("");
-		label_2.setIcon(new ImageIcon("C:\\Users\\Usuario\\Documents\\HackEvent\\Capture.PNG"));
+		label_2.setIcon(imgChart);
 		chartsPanel.add(label_2);
 		
 		JPanel auxPan1 = new JPanel();
 		chartsPanel.add(auxPan1);
 		auxPan1.setLayout(new GridLayout(4, 0, 0, 0));
 		
-		JLabel lblNewLabel_1 = new JLabel("Emergentes");
+		JLabel lblNewLabel_1 = new JLabel("Variabilidad dinamica");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		auxPan1.add(lblNewLabel_1);
@@ -125,7 +159,7 @@ public class Prototipo extends JFrame {
 		textField = new JTextField();
 		textField.setHorizontalAlignment(SwingConstants.CENTER);
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		textField.setText("12%");
+		textField.setText("0.59");
 		textField.setEditable(false);
 		auxPan1.add(textField);
 		textField.setColumns(10);
