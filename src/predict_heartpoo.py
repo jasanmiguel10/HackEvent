@@ -15,8 +15,8 @@ from keras.layers import Dense, Input, Flatten
 import pickle
 
 MAX_NB_WORDS     = 20000
-tokenizer_pickle = '../model/default_tokenizer_5.pickle'
-model_cnn        = '../model/default_5.h5'
+tokenizer_pickle = 'HackEvent/heartpoo/model/default_tutorial_tokenizer_5.pickle'
+model_cnn        = 'HackEvent/heartpoo/model/default_tutorial_5.h5'
 
 txt = sys.argv[1]
 print('%%%')
